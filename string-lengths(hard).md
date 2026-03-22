@@ -56,7 +56,7 @@ A ausência de **stack canary** é a abertura que precisamos. Com PIE ativo, pre
 
 ## Análise do Binário
 
-Abrindo o binário no GDB e inspecionando o fluxo de execução, identifica-se a seguinte sequência de chamadas:
+Abrindo o binário no GDB e inspecionando o fluxo de execução, identifica-se a seguinte sequência de chamadas dentro da função challenge():
 
 ### 1. `malloc@plt` — alocação no heap
 
