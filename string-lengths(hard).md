@@ -1,7 +1,7 @@
 # pwn.college — String Lengths (Hard)
 ### Intro to Cybersecurity · Orange Belt · Binary Exploitation
 
-> **Autor:** [seu nome/handle]  
+> **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
 > **Técnicas:** Null-byte injection · Stack buffer overflow via `memcpy` · Partial overwrite (PIE + ASLR bypass)
