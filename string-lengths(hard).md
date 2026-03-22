@@ -90,6 +90,7 @@ rax = <tamanho retornado>  (número de bytes antes do primeiro \x00)
 Após o retorno de `strlen`, o programa executa:
 
 ```asm
+mov QWORD PTR [rbp-0x20], rax
 cmp QWORD PTR [rbp-0x20], 0x38
 ```
 
