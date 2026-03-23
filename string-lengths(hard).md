@@ -100,7 +100,7 @@ Ou seja, verifica se o comprimento é **menor ou igual a 0x38 (56 bytes)**. Se f
 
 Como visto no GDB:
 
-![GDB - malloc](figuras/string_lengths_memcpy@plt.png)
+![GDB - malloc](figuras/string_lengths_malloc@plt.png)
 
 ```
 rdi = 0x7ffd8c862f10       (destino: buffer na stack)
@@ -247,7 +247,7 @@ Execução:
 
 Após algumas tentativas (devido ao 4º nibble aleatório do PIE), o exploit funcionou:
 
-![Flag capturada](figuras/string_lengths_resultado.png)
+![Flag capturada](figuras/string_lengths_resultados.png)
 
 ```
 You win! Here is your flag:
