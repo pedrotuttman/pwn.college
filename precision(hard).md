@@ -1,7 +1,7 @@
 # pwn.college — Precision (Hard)
 ### Intro to Cybersecurity · Orange Belt · Binary Exploitation
 
-> **Autor:** [seu nome/handle]  
+> **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
 > **Técnicas:** Stack buffer overflow · Sobrescrita precisa de variável local · Controle de fluxo sem tocar no return address
