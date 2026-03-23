@@ -58,7 +58,7 @@ read(0, &buffer, size);  // buffer em [rbp-0x90], size até 4096
 
 O buffer fica em `[rbp-0x90]` e aceita até **4096 bytes** — muito além do tamanho real do buffer, caracterizando um buffer overflow.
 
-![Disassembly de challenge com read e verificação](figuras/precision-challenge.png)
+![Disassembly de challenge com read e verificação](figuras/precision_read@plt.png)
 
 ---
 
