@@ -69,7 +69,7 @@ Como a granularidade do ASLR é de uma página (0x1000), os **3 nibbles menos si
 
 Ao abrir o binário no GDB (não stripped), identificam-se três funções principais:
 
-![Funções do binário com offsets](figuras/pies_funtions.png)
+![Funções do binário com offsets](figuras/pies_functions.png)
 
 Os endereços mostrados pelo GDB são os **offsets dentro da página**, não endereços absolutos. O offset de `win_authed` é `0x1ab2`.
 
