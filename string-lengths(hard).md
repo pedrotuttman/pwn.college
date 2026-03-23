@@ -60,6 +60,10 @@ Abrindo o binário no GDB e inspecionando o fluxo de execução, identifica-se a
 
 ### 1. `malloc@plt` — alocação no heap
 
+Como visto no GDB:
+
+![GDB - malloc](figuras/string_lengths_malloc@plt.png)
+
 ```
 rdi = 0x1000  (4096 bytes — tamanho do buffer a alocar)
 rax = <endereço do heap>  (ponteiro retornado, ex: 0x7ffd8c862f60)
@@ -80,7 +84,7 @@ O `read` lê diretamente bytes brutos do stdin — **sem adicionar null terminat
 
 O binário passa o buffer para `strlen` como visto abaixo:
 
-![GDB - strlen](figuras/Captura_de_tela_2026-03-22_155154.png)
+![GDB - strlen](figuras/string_lengths_strlen@plt.png)
 
 ```
 rdi = <endereço do heap>   (ponteiro para a string a medir)
@@ -97,10 +101,6 @@ cmp QWORD PTR [rbp-0x20], 0x38
 Ou seja, verifica se o comprimento é **menor ou igual a 0x38 (56 bytes)**. Se for maior, o programa encerra. Se passar nessa verificação, o fluxo segue para o `memcpy`.
 
 ### 4. `memcpy@plt` — cópia para a stack
-
-Como visto no GDB:
-
-![GDB - malloc](figuras/Captura_de_tela_2026-03-22_151116.png)
 
 ```
 rdi = 0x7ffd8c862f10       (destino: buffer na stack)
@@ -247,7 +247,7 @@ Execução:
 
 Após algumas tentativas (devido ao 4º nibble aleatório do PIE), o exploit funcionou:
 
-![Flag capturada](figuras/Captura_de_tela_2026-03-22_150934.png)
+![Flag capturada](figuras/string_lengths_resultados.png)
 
 ```
 You win! Here is your flag:
