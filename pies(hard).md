@@ -1,7 +1,7 @@
 # pwn.college — PIEs (Hard)
 ### Intro to Cybersecurity · Orange Belt · Binary Exploitation
 
-> **Autor:** [seu nome/handle]  
+> **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
 > **Técnicas:** Stack buffer overflow · PIE + ASLR bypass · Partial overwrite
@@ -69,7 +69,7 @@ Como a granularidade do ASLR é de uma página (0x1000), os **3 nibbles menos si
 
 Ao abrir o binário no GDB (não stripped), identificam-se três funções principais:
 
-![Funções do binário com offsets](figuras/pies-funcoes.png)
+![Funções do binário com offsets](figuras/pies_funtions.png)
 
 Os endereços mostrados pelo GDB são os **offsets dentro da página**, não endereços absolutos. O offset de `win_authed` é `0x1ab2`.
 
@@ -77,7 +77,7 @@ Os endereços mostrados pelo GDB são os **offsets dentro da página**, não end
 
 Dentro da função `challenge`, encontra-se a chamada para `read`:
 
-![Disassembly da função challenge com read](figuras/pies-read.png)
+![Disassembly da função challenge com read](figuras/pies_read@plt.png)
 
 ```
 rdx = 4096     → número máximo de bytes lidos
@@ -88,7 +88,7 @@ O buffer aceita até **4096 bytes**, mas é muito menor — vulnerabilidade de b
 
 ### Endereço do buffer
 
-![Endereço base do buffer](figuras/pies-buffer.png)
+![Endereço base do buffer](figuras/pies_iniciobuffer.png)
 
 O buffer começa em um endereço fixo relativo ao `rbp` da função `challenge`.
 
@@ -98,7 +98,7 @@ O buffer começa em um endereço fixo relativo ao `rbp` da função `challenge`.
 
 Com o GDB, identificamos os endereços relevantes durante a execução:
 
-![Return address na stack](figuras/pies-retaddr.png)
+![Return address na stack](figuras/pies_returnaddress.png)
 
 ```
 Início do buffer:   rbp - offset_buffer
@@ -119,7 +119,7 @@ Precisamos de **120 bytes de padding** para alcançar o return address.
 
 Ao executar `disas win_authed`, observamos que a função contém uma verificação de argumento logo no início:
 
-![Disassembly de win_authed com verificação](figuras/pies-winauthed.png)
+![Disassembly de win_authed com verificação](figuras/pies_verificacao_argumento.png)
 
 Para contornar essa verificação, apontamos o fluxo para **um endereço após o check**, cujo offset é `0x4ace` dentro da página onde o binário foi carregado.
 
@@ -189,11 +189,11 @@ Execução:
 
 Nas primeiras tentativas, o programa encerrou com erros — a base da página não coincidia:
 
-![Tentativas com segfault](figuras/pies-erros.png)
+![Tentativas com segfault](figuras/pies_erro.png)
 
 Após algumas execuções, a base da página aleatória coincidiu com a esperada e o exploit funcionou:
 
-![Flag capturada](figuras/pies-flag.png)
+![Flag capturada](figuras/pies_resultado.png)
 
 ```
 You win! Here is your flag:
