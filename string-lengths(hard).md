@@ -80,7 +80,7 @@ O `read` lê diretamente bytes brutos do stdin — **sem adicionar null terminat
 
 O binário passa o buffer para `strlen` como visto abaixo:
 
-![GDB - strlen](Captura_de_tela_2026-03-22_155154.png)
+![GDB - strlen](figuras/Captura_de_tela_2026-03-22_155154.png)
 
 ```
 rdi = <endereço do heap>   (ponteiro para a string a medir)
@@ -100,7 +100,7 @@ Ou seja, verifica se o comprimento é **menor ou igual a 0x38 (56 bytes)**. Se f
 
 Como visto no GDB:
 
-![GDB - malloc](Captura_de_tela_2026-03-22_151116.png)
+![GDB - malloc](figuras/Captura_de_tela_2026-03-22_151116.png)
 
 ```
 rdi = 0x7ffd8c862f10       (destino: buffer na stack)
@@ -247,7 +247,7 @@ Execução:
 
 Após algumas tentativas (devido ao 4º nibble aleatório do PIE), o exploit funcionou:
 
-![Flag capturada](Captura_de_tela_2026-03-22_150934.png)
+![Flag capturada](figuras/Captura_de_tela_2026-03-22_150934.png)
 
 ```
 You win! Here is your flag:
