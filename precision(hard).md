@@ -43,12 +43,7 @@ O binário possui três funções principais:
 
 No disassembly de `challenge`, encontramos a chamada para `read`:
 
-```asm
-mov rdx, QWORD PTR [rbp-0x98]   ; tamanho: até 4096 bytes
-lea rax, [rbp-0x90]              ; endereço do buffer
-mov rsi, rax
-call read
-```
+![Disassembly de challenge com read e verificação](figuras/precision_read@plt.png)
 
 Equivalente em C:
 
@@ -57,8 +52,6 @@ read(0, &buffer, size);  // buffer em [rbp-0x90], size até 4096
 ```
 
 O buffer fica em `[rbp-0x90]` e aceita até **4096 bytes** — muito além do tamanho real do buffer, caracterizando um buffer overflow.
-
-![Disassembly de challenge com read e verificação](figuras/precision_read@plt.png)
 
 ---
 
