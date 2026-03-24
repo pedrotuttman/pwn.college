@@ -215,7 +215,7 @@ results:
 
 Por isso salvamos o fd logo após o `open` — o `mov rax, 0` da syscall `read` sobrescreveria o valor.
 
-**`.space 100`** — reserva 100 bytes no próprio shellcode para usar como buffer temporário entre `read` e `write`. É o equivalente em assembly de `char buf[100]`.
+**`.space 100`** — reserva 100 bytes no próprio buffer na stack destinado para o shellcode para usar como buffer temporário entre `read` e `write`. É o equivalente em assembly de `char buf[100]`.
 
 ### Compilação e execução
 
