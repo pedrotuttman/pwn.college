@@ -1,4 +1,11 @@
-# Writeup: pwn.college — Binary Exploitation: Basic Shellcode
+# pwn.college — Basic Shellcode
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:** Code injection · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
+---
 
 ## Descrição do Desafio
 
@@ -27,7 +34,7 @@ $ ls -la /challenge/binary-exploitation-basic-shellcode
 -rwsr-xr-x 1 root root 17520 Jan 27 2025 /challenge/binary-exploitation-basic-shellcode
 ```
 
-O `s` no lugar do `x` do dono indica o **bit SUID** ativo. Isso significa que qualquer usuário que execute esse binário o fará **com o EUID do dono** — nesse caso, root.
+O `s` no lugar do `x` do dono indica o **bit SUID** ativo. Isso significa que qualquer usuário que execute esse binário o fará **com o EUID do dono** — nesse caso, root. OBS: Para executar o arquivo, continua sendo necessária a permissão `x`. O `s` faz com que **após o incício da execução do programa** o usuário o execute como dono dele.
 
 ### UID vs EUID
 
@@ -80,6 +87,22 @@ gcc -nostdlib -static -o shellcode shellcode.s
 objcopy --dump-section .text=shellcode-raw shellcode
 ```
 
+**`gcc -nostdlib -static`** — o `-nostdlib` impede o gcc de adicionar o runtime padrão do C (`crt0.o`, inicialização da libc, etc.), que conflitaria com nosso `_start` e adicionaria bytes indesejados. O `-static` garante que nenhuma biblioteca dinâmica seja necessária em runtime.
+
+**`objcopy --dump-section .text=shellcode-raw`** — o gcc gera um ELF completo com headers, seções de metadados, `.data`, `.bss`, etc. O desafio espera bytes crus de código, não um ELF. O `objcopy` extrai apenas a seção `.text` — onde estão as instruções — e salva como arquivo bruto:
+
+```
+shellcode (ELF completo)          shellcode-raw (só o código)
+┌─────────────────┐               ┌─────────────────┐
+│ ELF header      │               │ mov rax, 2      │
+│ .text ──────────┼──────────────►│ lea rdi, ...    │
+│ .data           │               │ syscall         │
+│ section headers │               │ ...             │
+└─────────────────┘               └─────────────────┘
+```
+
+São esses bytes crus que o desafio lê do stdin, copia para a stack e executa.
+
 ### Execução
 
 ```bash
@@ -96,6 +119,8 @@ O shell abriu, mas ao tentar `cat /flag`:
 cat /flag
 cat: /flag: Permission denied
 ```
+
+![Erro no shellcode injection](figuras/basic_shellcode_erro.png)
 
 ### Por que não funcionou?
 
@@ -192,7 +217,7 @@ results:
 
 Por isso salvamos o fd logo após o `open` — o `mov rax, 0` da syscall `read` sobrescreveria o valor.
 
-**`.space 100`** — reserva 100 bytes no próprio shellcode para usar como buffer temporário entre `read` e `write`. É o equivalente em assembly de `char buf[100]`.
+**`.space 100`** — reserva 100 bytes no próprio buffer na stack destinado para o shellcode para usar como buffer temporário entre `read` e `write`. É o equivalente em assembly de `char buf[100]`.
 
 ### Compilação e execução
 
@@ -207,6 +232,9 @@ cat shellcode-raw | /challenge/binary-exploitation-basic-shellcode
 ```
 pwn.college{MppM_ZP5xYyNrvnw3n5OIn8OREQ.ddTMywCOzYTNxEzW}
 ```
+
+![Sucesso no shellcode injection](figuras/basic_shellcode_sucesso.png)
+
 
 ---
 
