@@ -1,4 +1,11 @@
-# Writeup: pwn.college — Binary Exploitation: Basic Shellcode
+# pwn.college — Basic Shellcode
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:** Code injection · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
+---
 
 ## Descrição do Desafio
 
