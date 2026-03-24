@@ -34,7 +34,7 @@ $ ls -la /challenge/binary-exploitation-basic-shellcode
 -rwsr-xr-x 1 root root 17520 Jan 27 2025 /challenge/binary-exploitation-basic-shellcode
 ```
 
-O `s` no lugar do `x` do dono indica o **bit SUID** ativo. Isso significa que qualquer usuário que execute esse binário o fará **com o EUID do dono** — nesse caso, root.
+O `s` no lugar do `x` do dono indica o **bit SUID** ativo. Isso significa que qualquer usuário que execute esse binário o fará **com o EUID do dono** — nesse caso, root. OBS: Para executar o arquivo, continua sendo necessária a permissão `x`. O `s` faz com que **após o incício da execução do programa** o usuário o execute como dono dele.
 
 ### UID vs EUID
 
