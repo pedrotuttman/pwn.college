@@ -1,4 +1,12 @@
-# Writeup: pwn.college — Binary Exploitation: NOP Sled Shellcode
+# pwn.college — NOP Sled
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:** NOP sled · Direct syscall shellcode · Position-independent shellcode · SUID privilege abuse
+
+---
 
 ## Descrição do Desafio
 
