@@ -116,6 +116,8 @@ O binário executou os NOPs, deslizou até o código real e imprimiu a flag:
 pwn.college{AMnyeuCPVpLrtZZ2Fztief9JgA7.dhTMywCOzYTNxEzW}
 ```
 
+![Resultadi Correto do chall](figuras/nop_sled_results.png)
+
 ---
 
 ## Resumo
