@@ -120,6 +120,8 @@ cat /flag
 cat: /flag: Permission denied
 ```
 
+![Erro no shellcode injection](figuras/basic_shellcode_erro.png)
+
 ### Por que não funcionou?
 
 Embora o `/bin/sh` herde o EUID do processo pai (EUID = 0), o bash/sh possui uma **proteção intencional**: ao iniciar, ele compara UID e EUID. Se forem diferentes — situação típica de SUID — ele força `EUID = UID` para evitar escalonamento de privilégio acidental:
@@ -230,6 +232,9 @@ cat shellcode-raw | /challenge/binary-exploitation-basic-shellcode
 ```
 pwn.college{MppM_ZP5xYyNrvnw3n5OIn8OREQ.ddTMywCOzYTNxEzW}
 ```
+
+![Sucesso no shellcode injection](figuras/basic_shellcode_sucesso.png)
+
 
 ---
 
