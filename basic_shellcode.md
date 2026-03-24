@@ -87,6 +87,22 @@ gcc -nostdlib -static -o shellcode shellcode.s
 objcopy --dump-section .text=shellcode-raw shellcode
 ```
 
+**`gcc -nostdlib -static`** — o `-nostdlib` impede o gcc de adicionar o runtime padrão do C (`crt0.o`, inicialização da libc, etc.), que conflitaria com nosso `_start` e adicionaria bytes indesejados. O `-static` garante que nenhuma biblioteca dinâmica seja necessária em runtime.
+
+**`objcopy --dump-section .text=shellcode-raw`** — o gcc gera um ELF completo com headers, seções de metadados, `.data`, `.bss`, etc. O desafio espera bytes crus de código, não um ELF. O `objcopy` extrai apenas a seção `.text` — onde estão as instruções — e salva como arquivo bruto:
+
+```
+shellcode (ELF completo)          shellcode-raw (só o código)
+┌─────────────────┐               ┌─────────────────┐
+│ ELF header      │               │ mov rax, 2      │
+│ .text ──────────┼──────────────►│ lea rdi, ...    │
+│ .data           │               │ syscall         │
+│ section headers │               │ ...             │
+└─────────────────┘               └─────────────────┘
+```
+
+São esses bytes crus que o desafio lê do stdin, copia para a stack e executa.
+
 ### Execução
 
 ```bash
