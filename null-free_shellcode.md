@@ -4,7 +4,7 @@
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
-> **Técnicas:** NOP sled · Direct syscall shellcode · Position-independent shellcode · SUID privilege abuse
+> **Técnicas:** Null-free shellcode · Direct syscall shellcode · Position-independent shellcode · SUID privilege abuse · Runtime stack string construction
 
 ---
 
