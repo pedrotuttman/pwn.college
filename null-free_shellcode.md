@@ -1,4 +1,12 @@
-# Writeup: pwn.college — Binary Exploitation: Null-Free Shellcode
+# pwn.college — NULL-free Shellcode
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:** NOP sled · Direct syscall shellcode · Position-independent shellcode · SUID privilege abuse
+
+---
 
 ## Descrição do Desafio
 
@@ -31,7 +39,7 @@ A solução correta é fazer as syscalls diretamente — `open`, `read`, `write`
 
 O shellcode base, sem preocupação com null bytes, ficou assim:
 
-![shellcode1](images/shellcode1_null_bytes.png)
+![shellcode1](figuras/shellcode1_null_bytes.png)
 
 ```asm
 .global _start
@@ -96,7 +104,7 @@ Failed filter at byte 4!
 hd shellcode1-raw
 ```
 
-![hd shellcode1](images/hd_shellcode1_null_bytes_null_bytes.png)
+![hd shellcode1](figuras/hd_shellcode1_null_bytes_null_bytes.png)
 
 O hexdump revelou dois padrões de null bytes se repetindo ao longo do shellcode.
 
@@ -106,7 +114,7 @@ O hexdump revelou dois padrões de null bytes se repetindo ao longo do shellcode
 objdump -M intel -d shellcode1-elf
 ```
 
-![objdump shellcode1](images/objdump_shellcode1_null_bytes.png)
+![objdump shellcode1](figuras/objdump_shellcode1_null_bytes.png)
 
 O objdump confirmou as instruções responsáveis pelos null bytes. Dois padrões ficaram claros:
 
@@ -116,7 +124,7 @@ O objdump confirmou as instruções responsáveis pelos null bytes. Dois padrõe
 
 Consultando o formato da instrução `mov reg64, imm64`:
 
-![formato mov](images/comando_mov_hexadecimal_null_bytes.png)
+![formato mov](figuras/comando_mov_hexadecimal_null_bytes.png)
 
 A instrução `mov reg, imm64` usa o prefixo REX.W (`48` ou `49`) seguido de `c7 /0` ou `b8 +rd`, e espera **4 bytes** para o campo do imediato. Como valores pequenos ocupam apenas 1 byte, o assembler preenche os bytes restantes com `00`:
 
@@ -203,7 +211,7 @@ Movendo `flag` e `results` para *antes* do `_start`, o `rip` precisa *recuar* �
 
 O shellcode2 reorganizado com todas essas correções, verificado com `objdump`:
 
-![objdump shellcode2](images/objdump_shellcode2_null_bytes.png)
+![objdump shellcode2](figuras/objdump_shellcode2_null_bytes.png)
 
 Nenhuma instrução mostrava null bytes nas colunas de bytes. Parecia resolvido. Mas ao rodar:
 
@@ -221,7 +229,7 @@ O `objdump` desassembla apenas **instruções** — ele interpreta e exibe os op
 hd shellcode2-raw
 ```
 
-![hd shellcode2](images/hd_shellcode2_null_bytes.png)
+![hd shellcode2](figuras/hd_shellcode2_null_bytes.png)
 
 O hexdump revelou zeros logo no início — o `0x00` do terminador do `.string "/flag"` está no byte 5, exatamente onde o filtro parou:
 
@@ -253,7 +261,7 @@ Substituir `.space 100` por `.fill 0x200, 1, 0x90` preenche o buffer com `0x90` 
 
 A primeira tentativa foi substituir `.string` por `.ascii`:
 
-![ascii vs string](images/string_ascii_null_bytes.png)
+![ascii vs string](figuras/string_ascii_null_bytes.png)
 
 O `.ascii "/flag"` remove o terminador automático. Mas aí o `open()` não sabe onde a string termina — continua lendo a memória além de `/flag` indefinidamente, causando segfault.
 
@@ -335,7 +343,7 @@ O `.` representa o endereço atual (após a última instrução). `(. - buffer)`
 
 ## Shellcode Final (shellcode3)
 
-![shellcode3](images/shellcode3_null_bytes.png)
+![shellcode3](figuras/shellcode3_null_bytes.png)
 
 ```asm
 .global _start
@@ -404,7 +412,7 @@ O script Python garante que exatamente `0x1000` bytes sejam enviados — todos n
 
 ## Resultado
 
-![resultado](images/resultado_null_byte.png)
+![resultado](figuras/resultado_null_byte.png)
 
 ```
 pwn.college{Qc9ZoaHOQGM-jJgprLWp63G1P-E.dlTMywCOzYTNxEzW}
