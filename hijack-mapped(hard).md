@@ -4,7 +4,7 @@
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
-> **Técnicas:** Stack buffer overflow · Return address overwrite · Shellcode injection · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
+> **Técnicas:** Stack buffer overflow · Return address overwrite · Shellcode injection · GDB dynamic analysis · Cyclic pattern offset discovery · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
 
 ## Descrição do Desafio
 
