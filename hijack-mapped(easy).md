@@ -1,4 +1,4 @@
-# pwn.college — Basic Shellcode
+# pwn.college — Hijacking to (Mapped) Shellcode (easy)
 ### Intro to Cybersecurity · Orange Belt · Binary Exploitation
 
 > **Autor:** Pedro Tuttman  
