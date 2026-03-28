@@ -1,4 +1,10 @@
-# Writeup: pwn.college — Binary Exploitation: Hijack to Mapped Shellcode (Hard)
+# pwn.college — Hijacking to (Mapped) Shellcode (hard)
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:** Stack buffer overflow · Return address overwrite · Shellcode injection · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
 
 ## Descrição do Desafio
 
