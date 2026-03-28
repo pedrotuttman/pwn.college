@@ -10,7 +10,7 @@
 
 Este desafio é a versão difícil do anterior. A mecânica é a mesma — injetar um shellcode em uma região mapeada e redirecionar o fluxo de execução via buffer overflow — mas desta vez o binário **não fornece nenhuma informação sobre o stack frame**: não mostra o layout da stack, não diz onde começa o buffer, não diz onde está o return address. Toda essa informação precisa ser descoberta manualmente via GDB.
 
-![hijacking hard](images/hijacking-mapped_hard_.png)
+![hijacking hard](figuras/hijacking-mapped(hard).png)
 
 O binário informa apenas onde o shellcode será armazenado (`0x2c1b1000`) e aguarda três inputs:
 1. O shellcode (até `0x1000` bytes)
@@ -23,7 +23,7 @@ O binário informa apenas onde o shellcode será armazenado (`0x2c1b1000`) e agu
 
 ### Proteções com `checksec`
 
-![checksec](images/checksec-hijacking-mapped_hard_.png)
+![checksec](figuras/checksec-hijacking-mapped(hard).png)
 
 ```
 Arch:    amd64-64-little
@@ -48,7 +48,7 @@ As proteções são idênticas ao desafio easy. Os pontos relevantes continuam s
 
 ### Passo 1: Identificar as funções
 
-![functions](images/functions-hijacking-mapped_hard_.png)
+![functions](figuras/functions-hijacking-mapped(hard).png)
 
 ```
 gdb /challenge/binary-exploitation-hijack-to-mmap-shellcode
@@ -59,7 +59,7 @@ O binário tem duas funções relevantes: `main` e `challenge`. A `main` chama a
 
 ### Passo 2: Localizar o `mmap` no disassembly
 
-![mmap](images/mmap-shellcode-hijacking-mapped_hard_.png)
+![mmap](figuras/mmap-shellcode-hijacking-mapped(hard).png)
 
 ```asm
 <+132>:  mov  esi, 0x1000
@@ -71,7 +71,7 @@ Confirmei que o shellcode é armazenado em `0x2c1b1000` com `0x1000` bytes — e
 
 ### Passo 3: Localizar o `read` do shellcode
 
-![read shellcode](images/read-shellcode-hijacking-mapped_hard_.png)
+![read shellcode](figuras/read-shellcode-hijacking-mapped(hard).png)
 
 ```asm
 <+239>:  mov  rax, QWORD PTR [rip+0x264b]
@@ -85,7 +85,7 @@ Este é o `read` que lê o shellcode do stdin para a região mapeada — `0x1000
 
 ### Passo 4: Localizar o `read` do buffer da stack
 
-![read stack buffer](images/read-stackbuffer-hijacking-mapped_hard_.png)
+![read stack buffer](figuras/read-stackbuffer-hijacking-mapped(hard).png)
 
 ```asm
 <+363>:  mov  rdx, QWORD PTR [rbp-0x8]
@@ -105,7 +105,7 @@ Agora precisamos saber exatamente quantos bytes de padding são necessários par
 
 ### Gerando o padrão cyclic
 
-![cyclic](images/cyclic-hijacking-mapped_hard_.png)
+![cyclic](figuras/cyclic-hijacking-mapped(hard).png)
 
 ```python
 >>> payload = cyclic(500, n=8)
@@ -145,7 +145,7 @@ Mas o resultado final foi **104**. O `cyclic_find` retornou o offset correto den
 
 ## O Payload
 
-![payload](images/payload-hijacking-mapped_hard_.png)
+![payload](figuras/payload-hijacking-mapped(hard).png)
 
 Com o offset descoberto, o exploit é idêntico ao do desafio easy — apenas com `104` em vez de `56`:
 
@@ -173,7 +173,7 @@ O `p64(0x2c1b1000)` converte o endereço em 8 bytes little-endian. Ao retornar d
 
 ## Resultado
 
-![resultado](images/resultado-hijacking-mapped_hard_.png)
+![resultado](figuras/resultado-hijacking-mapped(hard).png)
 
 ```
 Mapped 0x1000 bytes for shellcode at 0x2c1b1000!
