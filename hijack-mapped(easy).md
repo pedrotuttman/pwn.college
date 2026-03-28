@@ -21,7 +21,7 @@ O programa funciona em três etapas:
 
 ### Proteções com `checksec`
 
-![checksec](figuras/checksec_hijacking-mapped_easy_.png)
+![checksec](figuras/checksec_hijacking-mapped(easy).png)
 
 ```
 Arch:    amd64-64-little
@@ -44,7 +44,7 @@ Pontos relevantes:
 
 ## Análise do Stack Frame
 
-![hijacking](figuras/hijacking-mapped_easy_.png)
+![hijacking](figuras/hijacking-mapped(easy).png)
 
 Ao executar o binário, ele exibe o stack frame da função `challenge()` e fornece informações cruciais:
 
@@ -81,7 +81,7 @@ Ou seja: 56 bytes de padding + 8 bytes do novo return address.
 
 ## O Shellcode
 
-![shellcode](figuras/shellcode-hijacking-mapped_easy_.png)
+![shellcode](figuras/shellcode-hijacking-mapped(easy).png)
 
 Reutilizei o shellcode básico de open/read/write dos desafios anteriores — sem preocupação com null bytes, já que esse desafio não filtra o shellcode:
 
@@ -135,7 +135,7 @@ objcopy --dump-section .text=shellcode1-raw shellcode-elf
 
 ## O Payload
 
-![payload](figuras/payload-hijacking-mapped_easy_.png)
+![payload](figuras/payload-hijacking-mapped(easy).png)
 
 O exploit foi feito com `pwntools` em Python interativo:
 
@@ -165,7 +165,7 @@ Ao retornar da função `challenge()`, em vez de voltar para `main`, o processad
 
 ## Resultado
 
-![resultado](figuras/resultado-hijacking-mapped_easy_.png)
+![resultado](figuras/resultado-hijacking-mapped(easy).png)
 
 O return address foi sobrescrito com sucesso:
 
