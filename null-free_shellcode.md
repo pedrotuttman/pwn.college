@@ -431,4 +431,3 @@ pwn.college{Qc9ZoaHOQGM-jJgprLWp63G1P-E.dlTMywCOzYTNxEzW}
 | `.space N` preenche com zeros | Inicialização padrão é `0x00` | `.fill N, 1, 0x90` |
 | Bytes finais do input são zeros | Binário lê `0x1000` bytes, bytes além do shellcode são `\0` | `.fill 0x1000 - (. - buffer), 1, 0x90` + padding Python |
 
-**Técnicas:** Null-free shellcode · Direct syscall shellcode · Position-independent shellcode · SUID privilege abuse · Stack string construction em runtime

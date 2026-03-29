@@ -210,6 +210,3 @@ pwn.college{oMF6dIzYTUHO9LLqC68F9u1cqlj.dBjMzwCOzYTNxEzW}
 
 A única diferença real entre os dois desafios é a necessidade de usar GDB e cyclic para descobrir o offset — a exploração em si é idêntica.
 
----
-
-**Técnicas:** Stack buffer overflow · Return address overwrite · Shellcode injection · GDB dynamic analysis · Cyclic pattern offset discovery · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode

@@ -194,7 +194,3 @@ O return address foi sobrescrito com `0x7fffffffda00` (endereço logo após o re
 | Endereço do shellcode | Fixo (fornecido pelo binário) | Lido do stack frame impresso |
 | Número de inputs | 3 (shellcode, enter, payload) | 1 (tudo junto) |
 | Endereço sobrescrito aponta para | Região mmap | Stack (logo após o ret addr) |
-
----
-
-**Técnicas:** Stack buffer overflow · Return address overwrite · Stack shellcode injection · Executable stack abuse · Direct syscall shellcode · SUID privilege abuse · Position-independent shellcode
