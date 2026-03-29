@@ -1,4 +1,10 @@
-# Writeup: pwn.college — Binary Exploitation: Hijack to Shellcode (Hard)
+# pwn.college — Hijacking to Shellcode (hard)
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:**  Stack buffer overflow · Return address overwrite · Stack shellcode injection · Executable stack abuse · GDB dynamic analysis · Cyclic pattern offset discovery · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
 
 ## Descrição do Desafio
 
@@ -12,13 +18,13 @@ As proteções são as mesmas do easy: sem canary, sem PIE, stack executável �
 
 ### Passo 1: Entender o fluxo do binário
 
-![input](images/input-hijackung-shellcode_hard_.png)
+![input](figuras/input-hijackung-shellcode(hard).png)
 
 Ao rodar o binário no GDB com `run`, ele solicita apenas **um único input** ("Send your payload (up to 4096 bytes)!"). Enviei um padrão cyclic de 500 bytes para identificar o offset até o return address.
 
 ### Passo 2: Localizar o `read` do stack buffer no disassembly
 
-![read](images/read-hijacking-shellcode_hard_.png)
+![read](figuras/read-hijacking-shellcode(hard).png)
 
 Com `disas challenge` no GDB, localizei o `read` responsável por ler o payload:
 
@@ -38,7 +44,7 @@ rbp+0x8 - (rbp-0x70) = 0x70 + 0x8 = 0x78 = 120 bytes
 
 ### Passo 3: Confirmar com cyclic — segfault no `ret`
 
-![ret](images/ret-hijacking-shellcode_hard_.png)
+![ret](figuras/ret-hijacking-shellcode(hard).png)
 
 Após enviar o padrão cyclic como input, o programa deu segfault. Confirmei que foi exatamente no `ret`:
 
@@ -81,7 +87,7 @@ payload layout na stack:
 
 ## O Payload
 
-![resultado](images/resultado-hijacking-shellcode_hard_.png)
+![resultado](figuras/resultado-hijacking-shellcode(hard).png)
 
 ```python
 from pwn import *
