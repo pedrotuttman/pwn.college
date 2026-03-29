@@ -1,5 +1,11 @@
-# Writeup: pwn.college — Binary Exploitation: Hijack to Shellcode (Hard)
+# pwn.college — Hijacking to Shellcode (hard)
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
 
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:**  Stack buffer overflow · Return address overwrite · Stack shellcode injection · Executable stack abuse · GDB dynamic analysis · Cyclic pattern offset discovery · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
+> 
 ## Descrição do Desafio
 
 Este desafio é a versão difícil do anterior. A mecânica é idêntica — buffer overflow com shellcode injetado diretamente na stack executável — mas desta vez o binário **não imprime o stack frame**, não diz onde começa o buffer, não diz onde está o return address. Toda essa informação precisa ser descoberta via GDB.
