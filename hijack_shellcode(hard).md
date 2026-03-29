@@ -137,7 +137,3 @@ pwn.college{Qb03iTllawGPSgR_Z2pi0e8t7Cs.dJjMzwCOzYTNxEzW}
 | Número de inputs | 1 | 1 |
 | Stack executável | ✅ Sim | ✅ Sim |
 | PIE | ❌ No PIE | ❌ No PIE |
-
----
-
-**Técnicas:** Stack buffer overflow · Return address overwrite · Stack shellcode injection · Executable stack abuse · GDB dynamic analysis · Cyclic pattern offset discovery · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
