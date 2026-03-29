@@ -97,7 +97,7 @@ O endereço para onde redirecionamos é `0x00007fffffffda10` — 8 bytes após o
 
 ## O Payload
 
-![payload](figueras/payload-hijacking-shellcode(easy).png)
+![payload](figuras/payload-hijacking-shellcode(easy).png)
 
 ```python
 from pwn import *
