@@ -1,4 +1,10 @@
-# Writeup: pwn.college — Binary Exploitation: Hijack to Shellcode (Easy)
+# pwn.college — Hijacking to Shellcode (easy)
+### Intro to Cybersecurity · Orange Belt · Binary Exploitation
+
+> **Autor:** Pedro Tuttman  
+> **Plataforma:** [pwn.college](https://pwn.college)  
+> **Categoria:** Binary Exploitation — Intro to Cybersecurity (Orange Belt)  
+> **Técnicas:**  Return address overwrite · Stack shellcode injection · Executable stack abuse · SUID privilege abuse · Position-independent shellcode · Direct syscall shellcode
 
 ## Descrição do Desafio
 
@@ -15,7 +21,7 @@ A estratégia muda completamente: em vez de redirecionar para um endereço mapea
 
 ### Proteções com `checksec`
 
-![checksec](images/checksec-hijacling-shellcode_easy_.png)
+![checksec](figuras/checksec-hijacling-shellcode(easy).png)
 
 ```
 Arch:    amd64-64-little
@@ -41,7 +47,7 @@ Sem PIE e com stack executável, a exploração fica direta: basta saber o ender
 
 ## Análise do Stack Frame
 
-![hijacking](images/hijacking-shellcode_easy_.png)
+![hijacking](figuras/hijacking-shellcode(easy).png)
 
 O binário exibe o stack frame da função `challenge()` e fornece as informações necessárias:
 
@@ -91,7 +97,7 @@ O endereço para onde redirecionamos é `0x00007fffffffda10` — 8 bytes após o
 
 ## O Payload
 
-![payload](images/payload-hijacking-shellcode_easy_.png)
+![payload](figueras/payload-hijacking-shellcode(easy).png)
 
 ```python
 from pwn import *
@@ -147,7 +153,7 @@ results: .space 100
 
 ## Resultado
 
-![resultado](images/resultado-hijacking-shellcode_easy_.png)
+![resultado](figuras/resultado-hijacking-shellcode(easy).png)
 
 O stack frame após o overflow confirma:
 
