@@ -199,6 +199,3 @@ PIE (Position Independent Executable) randomiza os endereços do **binário** (c
 
 Portanto, mesmo com PIE ativo, tanto o destino do salto (shellcode) quanto a distância a percorrer no overflow (56 bytes) são conhecidos e constantes.
 
----
-
-**Técnicas:** Stack buffer overflow · Return address overwrite · Shellcode injection · SUID privilege abuse · Position-independent shellcode
