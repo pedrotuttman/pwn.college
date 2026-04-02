@@ -4,6 +4,7 @@
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Program Security — Shellcode Writing
+> **Técnicas:** Shellcode injection · Runtime self-modifying shellcode · Stack-based syscall construction · Byte-by-byte instruction smuggling · Control flow hijack via `jmp rsp` · Return-address preservation via `rbx` + `jmp rbx` · Direct syscall shellcode (open/read/write/exit) · Filter evasion via deferred instruction materialization
 
 ---
 
