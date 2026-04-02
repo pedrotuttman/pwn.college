@@ -309,5 +309,3 @@ pwn.college{kPvLTLvjofnWFIrTus1HXaPBOxJ.dBjMywCOzYTNxEzW}
 | Flag obtida | ❌ | ✅ |
 
 ---
-
-**Técnicas:** Shellcode injection · REX.W prefix bypass · 32-bit register substitution · Direct syscall shellcode · Hex dump analysis (`hd`) · Disassembly inspection (`objdump`)
