@@ -1,4 +1,4 @@
-# pwn.college — Syscall Smuggler (Shellcode Writing)
+# pwn.college — Syscall Smuggler
 ### Program Security · Shellcode Writing · No-Syscall-Instruction Constraint
 
 > **Autor:** Pedro Tuttman  
