@@ -1,4 +1,4 @@
-# pwn.college — ello-ackers (Shellcode Writing)
+# pwn.college — ello-ackers
 ### Program Security · Shellcode Writing · No-H-Bytes Constraint
 
 > **Autor:** Pedro Tuttman  
