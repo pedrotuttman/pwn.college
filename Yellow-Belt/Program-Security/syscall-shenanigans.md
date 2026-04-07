@@ -3,7 +3,7 @@
 
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
-> **Categoria:** Program Security — Shellcode Writing
+> **Categoria:** Program Security — Shellcode Writing  
 > **Técnicas:** NOP sled para evasão de página read-only · Runtime self-modifying shellcode · Stack-based syscall construction · Byte-by-byte instruction smuggling · Control flow hijack via `jmp rsp` · Return-address preservation via `rbx` + `jmp rbx`
 
 ---
@@ -186,5 +186,3 @@ pwn.college{YWZqma57gz2crlHtngoocMz-37Z.dJjMywCOzYTNxEzW}
 | Por quê falhou/funcionou | `results` na 1ª página (read-only) | `0x00` é instrução inválida | `0x90` é NOP válido |
 
 ---
-
-**Técnicas:** NOP sled para evasão de página read-only · Runtime self-modifying shellcode · Stack-based syscall construction · Byte-by-byte instruction smuggling · Control flow hijack via `jmp rsp` · Return-address preservation via `rbx` + `jmp rbx`
