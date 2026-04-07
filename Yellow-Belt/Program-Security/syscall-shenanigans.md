@@ -4,6 +4,7 @@
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
 > **Categoria:** Program Security — Shellcode Writing
+> **Técnicas:** NOP sled para evasão de página read-only · Runtime self-modifying shellcode · Stack-based syscall construction · Byte-by-byte instruction smuggling · Control flow hijack via `jmp rsp` · Return-address preservation via `rbx` + `jmp rbx`
 
 ---
 
@@ -34,7 +35,7 @@ O binário revelou a restrição adicional:
 
 > **"Removing write permissions from first 4096 bytes of shellcode."**
 
-A técnica do `shellcode7` escreve `0f 05` na **stack** (`[rsp]`), não no próprio shellcode — então a proteção read-only da página do shellcode não deveria ser o problema diretamente. A hipótese foi outra: o shellcode estava correto, mas o **buffer `results`** — onde o conteúdo do `/flag` é lido — estava declarado dentro dos primeiros `0x1000` bytes. Na hora do `read`, o kernel tentava escrever nessa região read-only e silenciosamente falhava, sem imprimir nada.
+A técnica do `shellcode7` escreve `0f 05` na **stack** (`[rsp]`), não no próprio shellcode — então a proteção da primeira página não deveria ser o problema diretamente. A hipótese foi outra: o shellcode estava correto, mas o buffer `results` — onde o conteúdo do `/flag` é depositado pela syscall `read` — estava declarado dentro dos primeiros `0x1000` bytes. A syscall `read(fd, buf, 0x100)` precisa de permissão de **escrita** no endereço do buffer para depositar os dados lidos do arquivo. Como a primeira página havia tido sua permissão de escrita removida, o `read` falhava silenciosamente — e sem dados no buffer, o `write` não tinha nada para imprimir.
 
 A solução: **empurrar todo o shellcode para além dos primeiros `0x1000` bytes**, garantindo que tanto o código quanto o buffer `results` fiquem na segunda página, que permanece writable.
 
