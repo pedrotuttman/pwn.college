@@ -102,7 +102,7 @@ flag:
 25 shellcode5.raw
 ```
 
-Economia de 4 bytes — mas ainda longe dos 18. O `objdump` revelou que `lea rdi` e `mov rsi` ainda carregavam bytes desnecessários por usarem registradores de 64 bits.
+Economia de 4 bytes — mas ainda longe dos 18. O `objdump` revelou que `lea rdi` e `mov rsi` eram funções que carregavam muitos bytes. Então a ideia foi substituí-las por instruções de push e pop (menores).
 
 ---
 
