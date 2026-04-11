@@ -1,4 +1,4 @@
-# pwn.college — Syscall Shenanigans (Shellcode Writing)
+# pwn.college — Syscall Shenanigans
 ### Program Security · Shellcode Writing · No-Syscall + Read-Only First Page
 
 > **Autor:** Pedro Tuttman  
