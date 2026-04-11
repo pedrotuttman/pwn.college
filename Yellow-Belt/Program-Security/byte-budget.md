@@ -1,4 +1,4 @@
-# pwn.college — Byte Budget (Shellcode Writing)
+# pwn.college — Byte Budget 
 ### Program Security · Shellcode Writing · 18-Byte Shellcode Constraint
 
 > **Autor:** Pedro Tuttman  
