@@ -200,8 +200,6 @@ cd /
 cat ~/shellcode9.raw | /challenge/byte-budget
 ```
 
-O shellcode9 é idêntico ao shellcode7 — sem o `push 0x2f` — mas agora executado no diretório correto:
-
 ![Shellcode9 — idêntico ao shellcode7, sem o push 0x2f](figuras/shellcode9_byte-budget.png)
 
 ```asm
