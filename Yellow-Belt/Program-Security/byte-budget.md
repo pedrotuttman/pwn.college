@@ -3,7 +3,8 @@
 
 > **Autor:** Pedro Tuttman  
 > **Plataforma:** [pwn.college](https://pwn.college)  
-> **Categoria:** Program Security — Shellcode Writing
+> **Categoria:** Program Security — Shellcode Writing 
+> **Técnicas:** Shellcode size optimization · Syscall argument minimization · `chmod` privilege escalation via shellcode · Stack-based string construction · 16-bit register encoding to save bytes · Relative path exploitation via working directory control · `push`/`pop` pattern to avoid REX.W prefix
 
 ---
 
@@ -263,13 +264,11 @@ pwn.college{sKwvfcj9pJZiLST6034pdEBSJ3j.dRjMywCOzYTNxEzW}
 | Shellcode | Bytes | Mudança principal | Resultado |
 |---|---|---|---|
 | shellcode1 | 208 | open + read + write + exit | ❌ Muito grande |
-| shellcode4 | 29 | chmod com registradores 64 bits | ❌ |
-| shellcode5 | 25 | `push`/`pop` para `rax` | ❌ |
-| shellcode6 | 20 | `/flag` na stack com `push`, elimina `lea rdi` | ❌ |
-| shellcode7 | 18 | `mov si` (16 bits), sem `push 0x2f` | ❌ Segfault (sem `/` no path) |
+| shellcode4 | 29 | chmod com registradores 64 bits | ❌ Acima do permitido|
+| shellcode5 | 25 | `push`/`pop` para `rax` | ❌ Acima do permitido |
+| shellcode6 | 20 | `/flag` na stack com `push`, elimina `lea rdi` | ❌ Acima do permitido |
+| shellcode7 | 18 | `mov esi` (32 bits), sem `push 0x2f` | ❌ permissões inalteradas do /flag |
 | shellcode8 | 19 | `push 0x2f` + `mov si` | ❌ 1 byte acima |
-| shellcode9 | 18 | Igual ao shellcode7, executado em `/` | ✅ Flag obtida |
+| shellcode9 | 17 | Similar ao shellcode7, porém usando `si` e executado em `/` | ✅ Flag obtida |
 
 ---
-
-**Técnicas:** Shellcode size optimization · Syscall argument minimization · `chmod` privilege escalation via shellcode · Stack-based string construction · 16-bit register encoding to save bytes · Relative path exploitation via working directory control · `push`/`pop` pattern to avoid REX.W prefix
