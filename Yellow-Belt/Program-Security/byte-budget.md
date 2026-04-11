@@ -109,10 +109,9 @@ Economia de 4 bytes. O `objdump` revelou que o próximo gargalo era o `lea rdi, 
 
 ## Shellcode6 — Eliminando o `lea` com `push` na Stack (20 bytes)
 
-A grande mudança foi abandonar o `lea rdi, [rip + flag]` e construir a string `/flag` diretamente na stack com dois `push`, apontando `rdi` para o topo:
+A grande mudança foi abandonar o `lea rdi, [rip + flag]` e construir a string `/flag` diretamente na stack com o `push`, apontando `rdi` para o topo:
 
 - `push 0x67616c66` → empurra `flag` na stack em little-endian (`f`, `l`, `a`, `g`)
-- `push 0x2f` → empurra `/` com zero-extension automática para 8 bytes, terminando a string com null bytes
 - `mov rdi, rsp` → aponta `rdi` para o topo da stack, onde está `/flag\0`
 
 ![Shellcode6 construindo /flag na stack — 20 bytes](figuras/erro_shellcode6_byte-budget.png)
@@ -122,7 +121,6 @@ A grande mudança foi abandonar o `lea rdi, [rip + flag]` e construir a string `
 ```asm
 _start:
     push 0x67616c66
-    push 0x2f
     mov rdi, rsp
     push 90
     pop rax
@@ -138,15 +136,11 @@ Economia de mais 5 bytes. O `objdump` mostrou que o próximo gargalo era `mov rs
 
 ---
 
-## Shellcode7 — Trocando `rsi` por `esi` e removendo o `push 0x2f` (18 bytes)
+## Shellcode7 — Trocando `rsi` por `esi` (18 bytes)
 
-Duas mudanças simultâneas para cortar os 2 bytes restantes:
+A mudança foi trocar `mov rsi, 0x1ff` (registrador de 64 bits, 7 bytes) por `mov esi, 0777` (registrador de 32 bits, 5 bytes) — em x86-64, escrever em `esi` zera automaticamente os 32 bits superiores de `rsi`, então o comportamento é idêntico, mas sem os null bytes extras do modo 64 bits. Isso fez com que o shellcode economizasse 2 bytes. Os exatos 2 bytes que deixavam de ser preenchidos no registrador de 64 bits.
 
-A primeira foi trocar `mov rsi, 0x1ff` (registrador de 64 bits, 7 bytes) por `mov esi, 0777` (registrador de 32 bits, 5 bytes) — em x86-64, escrever em `esi` zera automaticamente os 32 bits superiores de `rsi`, então o comportamento é idêntico, mas sem os null bytes extras do modo 64 bits.
-
-A segunda foi remover o `push 0x2f` — a string na stack ficou apenas com `flag`, sem o `/` inicial:
-
-![Shellcode7 com mov esi e sem o push 0x2f — 18 bytes exatos](figuras/shellcode7_byte-budget.png)
+![Shellcode7 com mov esi — 18 bytes exatos](figuras/shellcode7_byte-budget.png)
 
 ```asm
 _start:
@@ -183,9 +177,9 @@ O crash acontece **depois** que o `chmod` já foi aplicado. Porém, as permissõ
 
 ---
 
-## Shellcode8 — Adicionando o `/` de volta (19 bytes, inválido)
+## Shellcode8 — Adicionando o `/` e trocando `esi` por `si` (19 bytes, inválido)
 
-A tentativa foi recolocar o `push 0x2f` para completar o caminho `/flag`, e usar `mov si` (16 bits) em vez de `mov esi` (32 bits) para compensar o byte extra:
+A tentativa foi colocar o `push 0x2f` para completar o caminho `/flag`, e usar `mov si` (16 bits) em vez de `mov esi` (32 bits) para compensar o byte extra:
 
 ![Shellcode8 com push 0x2f e mov si, 0x1ff — 19 bytes](figuras/shellcode8_byte-budget.png)
 
@@ -210,13 +204,11 @@ _start:
 
 ## Shellcode9 — A Solução: `mov si` + Executar em `/` (17 bytes)
 
-A solução veio de duas percepções combinadas:
+A solução veio da seguinte percepção:
 
-A primeira: trocar `mov esi` (32 bits, 5 bytes) por `mov si` (16 bits, 4 bytes) — o registrador `si` é a metade inferior de `esi`/`rsi`. Como `0x1ff` cabe em 16 bits e os bits superiores já estão zerados, o resultado para o `chmod` é idêntico, com 1 byte a menos.
+O `chmod` usa um **caminho relativo ao diretório de trabalho atual** quando o path não começa com `/`. Se o shellcode for executado **a partir do diretório `/`**, então `flag` (sem a barra) resolve corretamente para `/flag`.
 
-A segunda: o `chmod` usa um **caminho relativo ao diretório de trabalho atual** quando o path não começa com `/`. Se o shellcode for executado **a partir do diretório `/`**, então `flag` (sem a barra) resolve corretamente para `/flag`.
-
-Ou seja: em vez de incluir o `/` no shellcode, basta executar o binário com o diretório de trabalho em `/`:
+Ou seja: em vez de incluir o `/` no shellcode, basta executar o binário com o diretório de trabalho em `/`, economizando 2 bytes da intrução `push 0x2f`:
 
 ```bash
 cd /
@@ -288,7 +280,7 @@ pwn.college{sKwvfcj9pJZiLST6034pdEBSJ3j.dRjMywCOzYTNxEzW}
 | shellcode1 | 208 | open + read + write + exit | ❌ Muito grande |
 | shellcode4 | 29 | chmod com registradores de 64 bits | ❌ Acima do limite |
 | shellcode5 | 25 | `push`/`pop` para `rax`, elimina REX.W | ❌ Acima do limite |
-| shellcode6 | 20 | `/flag` na stack com `push`, elimina `lea rdi` | ❌ Acima do limite |
-| shellcode7 | 18 | `mov esi` (32 bits), sem `push 0x2f` | ❌ `chmod` falha — `cwd` era `~` |
+| shellcode6 | 20 | `flag` na stack com `push`, elimina `lea rdi` | ❌ Acima do limite |
+| shellcode7 | 18 | `mov esi` (32 bits)` | ❌ `chmod` falha — `cwd` era `~` |
 | shellcode8 | 19 | `push 0x2f` + `mov si` (16 bits) | ❌ 1 byte acima do limite |
 | shellcode9 | 17 | `mov si` (16 bits), sem `push 0x2f`, executado em `/` | ✅ Flag obtida |
