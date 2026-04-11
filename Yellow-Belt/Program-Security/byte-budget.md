@@ -160,7 +160,7 @@ _start:
 
 ![Shellcode7 executando: segfault — /flag não encontrado sem o /](figuras/erro_shellcode7_byte-budget.png)
 
-**Segmentation fault.** O motivo: sem o `push 0x2f`, a stack continha apenas `flag\0` — sem a barra inicial. O `chmod` tentava encontrar o arquivo `flag` no diretório atual (home `~`), que não existe, e falhava.
+**Segmentation fault.** Analisando o shellcode7.elf através do GDB, percebi que a SegFault se deu após a chamada de sistema, e mesmo assim as permissões não mudaram. Isso me fez observar o caminho do arquivo que coloquei em runtime na stack e descobrir que eu não havia colocado o "/" de "/flag". Então o programa não estava encontrando o arquivo alvo e não alterava em nada. A Segmentation fault se dava, pois, como o fluxo do programa estava na stack, ele continuava lendo mesmo depois de ter percorrido a string "flag", acessando um endereço que inválido.
 
 ---
 
