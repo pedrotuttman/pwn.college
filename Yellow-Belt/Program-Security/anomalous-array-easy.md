@@ -52,7 +52,7 @@ Como a flag está em endereços **mais baixos** que o array (antes dele na memó
 
 ## Confirmando o Acesso — Primeiros Testes
 
-Antes de tentar o índice negativo, foi testado o comportamento normal do binário com um índice válido (`1`), que retorna um dos hacker numbers esperados — confirmando que o programa funciona como descrito:
+Antes de tentar o índice negativo, foi testado o comportamento normal do binário com um índice válido (`0`), que retorna um dos hacker numbers esperados — confirmando que o programa funciona como descrito:
 
 ![Execução com índice 1 retornando um hacker number válido do array](figuras/teste1-anomalous-array-easy.png)
 
