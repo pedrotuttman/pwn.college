@@ -193,7 +193,7 @@ A flag pwn.college{0s7H2N2hKvp8b2PaqGBjKDJnWat.0VN4cDOxwCOzYTNxEzW} foi encontra
 | Endereços fornecidos pelo binário | ✅ Sim | ❌ Não |
 | Como obter o endereço da flag | Leitura direta do output | GDB: `$rsi` no `read` após `open` |
 | Como obter o endereço do array | Leitura direta do output | GDB: análise do loop de cópia no disassembly |
-| Array acessado pelo usuário | Único, direto | Array grande gerado por loop (cópia do array pequeno) |
+| Array acessado pelo usuário | Array grande gerado por loop (cópia do array pequeno) | Array grande gerado por loop (cópia do array pequeno) |
 | Índice inicial do exploit | `-185` | `-239` |
 | Estrutura do exploit | Idêntica | Idêntica |
 | Flag encontrada após N inputs | 8 | 8 |
