@@ -205,5 +205,4 @@ Quando `challenge` chama `putchar()` após a sobrescrita, o stub em `putchar@plt
 | ASLR | ✅ Presente | ✅ Presente (offsets fixos compensam) |
 | PIE | ✅ Presente | ✅ Presente |
 | Endereços fornecidos | ✅ Sim (easy) / ❌ Não (hard) | ✅ Sim (array, GOT, win) |
-| GDB necessário fora do exploit | ❌ Não (easy) | ✅ Sim (identificar função alvo e formato) |
-| GDB para execução final | — | ❌ Não (dropa permissões) |
+
